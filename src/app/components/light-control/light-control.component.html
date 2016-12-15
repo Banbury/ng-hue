@@ -1,0 +1,13 @@
+<table class="table">
+    <thead>
+        <th></th><th>Name</th><th>Type</th><th>Reachable</th><th>On</th><th>Brightness</th>
+    </thead>
+    <tr [class.text-muted]="!l.value.state.reachable" *ngFor="let l of lights | values; trackBy l?.key">
+        <td><app-hue-icon [modelid]="l.value.modelid" [width]="32" [height]="32"></app-hue-icon></td>
+        <td>{{ l.value.name }}</td>
+        <td><span data-toggle="tooltip" title="{{ l.value.modelid }}">{{ l.value.type }}</span></td>
+        <td>{{ l.value.state.reachable }}</td>
+        <td><ui-switch [checked]="l.value.state.on" [disabled]="!l.value.state.reachable" (change)="toggle(l.key, !l.value.state.on)"></ui-switch></td>
+        <td><input type="range" #ref id="weight" min="1" max="254" step="1" [value]="l.value.state.bri" [attr.disabled]="!l.value.state.reachable ? true : null" (change)="changeBrightness(l.key, ref.value)" /></td>
+    </tr>
+</table>

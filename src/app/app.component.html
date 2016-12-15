@@ -1,0 +1,16 @@
+<nav class="navbar navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Lights!</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a routerLink="/" routerLinkActive="active">Lights</a></li>
+            <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a routerLink="/alarms" routerLinkActive="active">Alarms</a></li>
+            <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a routerLink="/timers" routerLinkActive="active">Timers</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <router-outlet></router-outlet>
+</div>

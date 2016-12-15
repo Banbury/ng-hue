@@ -1,0 +1,11 @@
+<div class="panel-group" *ngFor="let sch of schedules | values">
+    <div class="panel panel-default">
+        <div class="panel-heading"><h4 class="panel-title"><span class="glyphicon glyphicon-bell">&nbsp;</span><a data-toggle="collapse" href="#collapse{{sch.key}}">{{ sch.value.name }}</a></h4></div>
+        <div id="collapse{{sch.key}}" class="panel-collapse collapse">
+            <div class="panel-body">
+                <p>Status: {{ sch.value.status }}</p>
+                <p>Created: {{ sch.value.created }}</p>
+            </div>
+        </div>
+    </div>
+</div>
