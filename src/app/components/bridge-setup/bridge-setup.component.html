@@ -1,10 +1,18 @@
-<div class="panel panel-default">
-    <div class="panel-body">
+<ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#general">General</a></li>
+    <li><a data-toggle="tab" href="#whitelist">Whitelist</a></li>
+</ul>
+
+<div class="tab-content">
+    <div id="general" class="tab-pane fade in active">
         <p>Name: {{ config.name }}</p>
         <p>API Version: {{ config.apiversion }}</p>
         <p>Software Version: {{ config.swversion }}</p>
         <div class="panel panel-default" *ngIf="config.swupdate">
-            <div class="panel-heading"><h3 class="panel-title">Software Update</h3> <button class="btn btn-default pull-right" *ngIf="config.swupdate.updatestate < 2">Check</button></div>
+            <div class="panel-heading">
+                <button class="btn btn-default pull-right" *ngIf="config.swupdate.updatestate < 2">Check</button>
+                <h3 class="panel-title">Software Update</h3>
+            </div>
             <div class="panel-body">
                 <p>Update State: {{ config.swupdate.updatestate }}</p>
                 <p>url: {{ config.swupdate.url }}</p>
@@ -40,5 +48,18 @@
         <p>Factory New: {{ config.factorynew }}</p>
         <p>Replaces Bridge ID: {{ config.replacesbridgeid }}</p>
         <p>Datastore Version: {{ config.datastoreversion }}</p>
+    </div>
+    <div id="whitelist" class="tab-pane fade" *ngIf="config.whitelist">
+        <div class="panel panel-default" *ngFor="let w of config.whitelist | values">
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-remove pull-right"></span>
+                <h3 class="panel-title">{{ w.key }}</h3>
+            </div>
+            <div class="panel-body">
+                <p>Name: {{ w.value.name }}</p>
+                <p>Created on: {{ w.value['create date'] }}</p>
+                <p>Last used on: {{ w.value['last use date'] }}</p>
+            </div>
+        </div>
     </div>
 </div>

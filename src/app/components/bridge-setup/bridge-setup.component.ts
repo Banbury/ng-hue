@@ -31,7 +31,7 @@ export class BridgeSetupComponent implements OnInit {
 
         this.bridge_sub = this.hueService.getConfig()
             .subscribe(
-                c =>  this.config = c,
+                c =>  { this.config = c },
                 error => console.log(<any>error)
             );
     }

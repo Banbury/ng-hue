@@ -1,12 +1,15 @@
 import { Portalstate } from './portalstate';
 import { Swupdate } from './swupdate';
+import { Whitelist } from './whitelist';
+
+export type WhitelistList = { [id: string]: Whitelist };
 
 export class Config {
     name: 	string;
-    whitelist: 	any;
     apiversion:	string;
     swversion: 	string;
     swupdate: Swupdate;
+    whitelist: WhitelistList;
     proxyaddress: 	string;
     proxyport: 	number;
     linkbutton: 	boolean;
