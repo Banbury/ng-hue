@@ -1,0 +1,44 @@
+<div class="panel panel-default">
+    <div class="panel-body">
+        <p>Name: {{ config.name }}</p>
+        <p>API Version: {{ config.apiversion }}</p>
+        <p>Software Version: {{ config.swversion }}</p>
+        <div class="panel panel-default" *ngIf="config.swupdate">
+            <div class="panel-heading"><h3 class="panel-title">Software Update</h3> <button class="btn btn-default pull-right" *ngIf="config.swupdate.updatestate < 2">Check</button></div>
+            <div class="panel-body">
+                <p>Update State: {{ config.swupdate.updatestate }}</p>
+                <p>url: {{ config.swupdate.url }}</p>
+                <p>text: {{ config.swupdate.text }}</p>
+                <p>notify: {{ config.swupdate.notify }}</p>
+            </div>
+        </div>
+        <p>Proxy Address: {{ config.proxyaddress }}</p>
+        <p>Proxy Port: {{ config.proxyport }}</p>
+        <p>Link Button: {{ config.linkbutton }}</p>
+        <p>IP Address: {{ config.ipaddress }}</p>
+        <p>MAC Address: {{ config.address }}</p>
+        <p>Network Mask: {{ config.netmask }}</p>
+        <p>Gateway IP: {{ config.gateway }}</p>
+        <p>DHCP: {{ config.dhcp }}</p>
+        <p>Portal Services: {{ config.portalservices }}</p>
+        <p>Portal Connection: {{ config.portalservices }}</p>
+        <div class="panel panel-default" *ngIf="config.portalstate">
+            <div class="panel-heading"><h3 class="panel-title">Portal Status</h3></div>
+            <div class="panel-body">
+                <p>Signed on: {{ config.portalstate.signedon }}</p>
+                <p>Incoming: {{ config.portalstate.incoming }}</p>
+                <p>Outgoing: {{ config.portalstate.outgoing }}</p>
+                <p>Communication: {{ config.portalstate.communication }}</p>
+            </div>
+        </div>
+        <p>UTC: {{ config.UTC }}</p>
+        <p>Local Time: {{ localtime }}</p>
+        <p>Timezone: {{ config.timezone }}</p>
+        <p>Zigbee Channel: {{ config.zigbeechannel }}</p>
+        <p>Model ID: {{ config.modelid }}</p>
+        <p>Bridge ID: {{ config.bridgeid }}</p>
+        <p>Factory New: {{ config.factorynew }}</p>
+        <p>Replaces Bridge ID: {{ config.replacesbridgeid }}</p>
+        <p>Datastore Version: {{ config.datastoreversion }}</p>
+    </div>
+</div>

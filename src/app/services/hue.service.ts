@@ -1,19 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, URLSearchParams, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import { environment } from '../../environments/environment';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 
 import { Light } from '../hue/light';
 import { Schedule } from '../hue/schedule';
+import { Config } from '../hue/config';
 
 export type LightList =  { [id: string]: Light };
 export type ScheduleList =  { [id: string]: Schedule };
 
 @Injectable()
 export class HueService {
-    private baseUrl = "http://192.168.1.103/api/ygTesTPVunM-D8l-N1ZRlo4MGqYDcd1WK7x2qIZR";
+    private baseUrl = `${environment.url}${environment.apikey}`;
 
     constructor(private http: Http) {
     }
@@ -26,7 +28,12 @@ export class HueService {
         return headers;
     }
 
-    getBridges() {
+    getConfig(): Observable<Config> {
+        return this.http.get(this.baseUrl + "/config")
+            .map<Config>(res => {
+                return res.json() || {};
+            })
+            .catch(this.handleError);
     }
 
     getLights(): Observable<LightList> {
