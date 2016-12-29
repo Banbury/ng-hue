@@ -15,7 +15,7 @@ export class BridgeSetupComponent implements OnInit {
     bridge_sub: Subscription;
 
 
-    constructor(private hueService: HueService) { }
+    constructor(private hue: HueService) { }
 
     ngOnInit() {
         this.reload();
@@ -29,11 +29,18 @@ export class BridgeSetupComponent implements OnInit {
             this.bridge_sub.unsubscribe();
         }
 
-        this.bridge_sub = this.hueService.getConfig()
+        this.bridge_sub = this.hue.getConfig()
             .subscribe(
                 c =>  { this.config = c },
                 error => console.log(<any>error)
             );
     }
 
+    deleteUser(apikey: string) {
+        this.hue.deleteUser(apikey).subscribe(
+            r => {},
+            error => console.log(<any>error),
+            () => this.reload()
+        );
+    }
 }

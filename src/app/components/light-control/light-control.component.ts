@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs/Subscription';
 import "rxjs/add/observable/interval";
 import "rxjs/add/operator/switchMap";
 import "rxjs/add/operator/startWith";
+import "rxjs/add/operator/takeWhile";
 
 import { Light } from '../../hue/light';
 
@@ -17,6 +18,7 @@ import { Light } from '../../hue/light';
 export class LightControlComponent implements OnInit, OnDestroy {
     lights: LightList = {};
     lights_sub : Subscription;
+    pause: boolean = false;
 
     constructor(private hueService: HueService) {
     }
@@ -35,7 +37,9 @@ export class LightControlComponent implements OnInit, OnDestroy {
         if (this.lights_sub) {
             this.lights_sub.unsubscribe();
         }
-        this.lights_sub = Observable.interval(5000).startWith(-1).switchMap(() => {
+        this.lights_sub = Observable.interval(5000).startWith(-1)
+        .takeWhile(x => !this.pause)
+        .switchMap(() => {
             return this.hueService.getLights();
         })
         .subscribe(
@@ -52,6 +56,21 @@ export class LightControlComponent implements OnInit, OnDestroy {
 
     changeBrightness(id: string, value: string) {
         this.hueService.changeBrightness(id, value).subscribe(
+            o => this.reload()
+        );
+    }
+
+    colorPickerClicked() {
+        this.pause = true;
+    }
+
+    colorPickerClosed() {
+        this.pause = false;
+        this.reload();
+    }
+
+    colorSelected(id, color) {
+        this.hueService.changeColor(id, color).subscribe(
             o => this.reload()
         );
     }

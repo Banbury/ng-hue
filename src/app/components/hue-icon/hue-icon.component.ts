@@ -17,18 +17,21 @@ export class HueIconComponent implements OnInit {
     constructor() { }
 
     ngOnInit() {
+        switch (this.modelid) {
+            case 'LWB006':
+                this.icon = "white_e27.svg";
+                break;
+            case 'LCT010':
+                this.icon = "white_and_color_e27.svg";
+                break;
+        }
+
         if (this.width) {
             this.image.nativeElement.width = this.width;
         }
 
         if (this.height) {
             this.image.nativeElement.height = this.height;
-        }
-
-        switch (this.modelid) {
-            case 'LWB006':
-                this.icon = "white_e27.svg";
-                break;
         }
     }
 

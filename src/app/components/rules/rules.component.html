@@ -1,0 +1,39 @@
+<div>
+    <div class="panel panel-default" *ngFor="let r of rules | values">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{ r.value.name }}</h3>
+        </div>
+        <div class="panel-body">
+            <p>Created: {{ r.value.created | date: 'medium' }}</p>
+            <p># triggered: {{ r.value.timestriggered }}</p>
+            <p *ngIf="r.value.lasttriggered != 'none'">Last triggered: {{ r.value.lasttriggered | date: 'medium' }}</p>
+
+            <h4>Conditions</h4>
+            <table class="table">
+                <thead>
+                    <th>Address</th><th>Operator</th><th>Value</th>
+                </thead>
+                <tbody>
+                    <tr class="" *ngFor="let c of r.value.conditions">
+                        <td>{{ c.address }}</td>
+                        <td>{{ c.operator }}</td>
+                        <td>{{ c.value }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h4>Actions</h4>
+            <table class="table">
+                <thead>
+                    <th>Address</th><th>Method</th><th>Body</th>
+                </thead>
+                <tbody>
+                    <tr class="" *ngFor="let a of r.value.actions">
+                        <td>{{ a.address }}</td>
+                        <td>{{ a.method }}</td>
+                        <td>{{ a.body }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

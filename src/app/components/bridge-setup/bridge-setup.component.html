@@ -10,7 +10,7 @@
         <p>Software Version: {{ config.swversion }}</p>
         <div class="panel panel-default" *ngIf="config.swupdate">
             <div class="panel-heading">
-                <button class="btn btn-default pull-right" *ngIf="config.swupdate.updatestate < 2">Check</button>
+                <span class="glyphicon glyphicon-refresh pull-right" *ngIf="config.swupdate.updatestate < 2"></span>
                 <h3 class="panel-title">Software Update</h3>
             </div>
             <div class="panel-body">
@@ -39,7 +39,7 @@
                 <p>Communication: {{ config.portalstate.communication }}</p>
             </div>
         </div>
-        <p>UTC: {{ config.UTC }}</p>
+        <p>UTC: {{ config.UTC | date:'medium' }}</p>
         <p>Local Time: {{ localtime }}</p>
         <p>Timezone: {{ config.timezone }}</p>
         <p>Zigbee Channel: {{ config.zigbeechannel }}</p>
@@ -52,13 +52,13 @@
     <div id="whitelist" class="tab-pane fade" *ngIf="config.whitelist">
         <div class="panel panel-default" *ngFor="let w of config.whitelist | values">
             <div class="panel-heading">
-                <span class="glyphicon glyphicon-remove pull-right"></span>
+                <span class="glyphicon glyphicon-remove pull-right" (click)="deleteUser(w.key)"></span>
                 <h3 class="panel-title">{{ w.key }}</h3>
             </div>
             <div class="panel-body">
                 <p>Name: {{ w.value.name }}</p>
-                <p>Created on: {{ w.value['create date'] }}</p>
-                <p>Last used on: {{ w.value['last use date'] }}</p>
+                <p>Created on: {{ w.value['create date'] | date:'medium' }}</p>
+                <p>Last used on: {{ w.value['last use date'] | date:'medium' }}</p>
             </div>
         </div>
     </div>

@@ -1,0 +1,16 @@
+<div>
+    <h3>Setup</h3>
+    <p>Register an API key with your Philips Hue Bridge.</p>
+    <div class="form-group">
+        <label for="usr">Name:</label>
+        <div class="input-group">
+            <input type="text" class="form-control" id="usr" [(ngModel)]="appname">
+            <span class="input-group-btn"><button class="btn btn-default" [disabled]="!appname" (click)="createUser()">New User</button></span>
+        </div>
+    </div>
+
+    <div class="progress" [hidden]="!isWaiting">
+        <div class="progress-bar progress-bar-info" role="progressbar" [style.width.%]="progress">
+        </div>
+    </div>
+</div>

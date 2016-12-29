@@ -1,23 +1,26 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, URLSearchParams, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { environment } from '../../environments/environment';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 
+import { ConfigService } from './config.service';
+
 import { Light } from '../hue/light';
 import { Schedule } from '../hue/schedule';
 import { Config } from '../hue/config';
+import { Rule, RuleList } from '../hue/rule';
 
 export type LightList =  { [id: string]: Light };
 export type ScheduleList =  { [id: string]: Schedule };
 
 @Injectable()
 export class HueService {
-    private baseUrl = `${environment.url}${environment.apikey}`;
+    private baseUrl = "";
 
-    constructor(private http: Http) {
+    constructor(private http: Http, private config: ConfigService) {
+        this.baseUrl = `${config.url}${config.apikey}`;
     }
 
     getHeaders() : Headers {
@@ -26,6 +29,27 @@ export class HueService {
         headers.append('Accept', 'application/json');
 
         return headers;
+    }
+
+    createUser(name: string): Observable<string> {
+        return this.http.post(this.baseUrl, { devicetype:  name})
+            .map<string>(res => {
+                let r = res.json();
+                if (r.success) {
+                    return r.success.username;
+                }
+                return null;
+            })
+            .catch(this.handleError);
+    }
+
+    deleteUser(name: string): Observable<boolean> {
+        return this.http.delete(`${this.baseUrl}/config/whitelist/${name}`)
+            .map<boolean>(res  => {
+                let r = res.json();
+                return r.success;
+            })
+            .catch(this.handleError);
     }
 
     getConfig(): Observable<Config> {
@@ -47,6 +71,14 @@ export class HueService {
     getSchedules(): Observable<ScheduleList> {
         return this.http.get(this.baseUrl + "/schedules")
             .map<ScheduleList>(res => {
+                return res.json() || {};
+            })
+            .catch(this.handleError);
+    }
+
+    getRules(): Observable<RuleList> {
+        return this.http.get(this.baseUrl + "/rules")
+            .map<RuleList>(res => {
                 return res.json() || {};
             })
             .catch(this.handleError);
@@ -78,6 +110,16 @@ export class HueService {
         let headers = this.getHeaders();
         headers.append("Content-Length", "" + (payload.length * 2));
 
+        return this.http.put(this.baseUrl + "/lights/" + id + "/state", payload, { headers: headers })
+            .map(
+                res => res.json()
+            )
+            .catch(this.handleError);
+    }
+
+    changeColor(id: string, value: number[]) {
+        let payload = JSON.stringify({"xy": value});
+        let headers = this.getHeaders();
         return this.http.put(this.baseUrl + "/lights/" + id + "/state", payload, { headers: headers })
             .map(
                 res => res.json()

@@ -4,7 +4,7 @@
         <div id="collapse{{sch.key}}" class="panel-collapse collapse">
             <div class="panel-body">
                 <p>Status: {{ sch.value.status }}</p>
-                <p>Created: {{ sch.value.created }}</p>
+                <p>Created: {{ sch.value.created | date:'medium' }}</p>
             </div>
         </div>
     </div>

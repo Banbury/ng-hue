@@ -1,0 +1,9 @@
+<input class="form-control" readonly #ignoredInput
+    [cpOutputFormat]="'rgba'"
+    [cpAlphaChannel]="'disabled'"
+    [cpOKButton]="true"
+    (colorPickerChange)="onChanged($event)"
+    (cpToggleChange)="onToggle($event)"
+    [colorPicker]="color"
+    [style.background]="color" [value]="color"
+    (click)="onClick()" />
